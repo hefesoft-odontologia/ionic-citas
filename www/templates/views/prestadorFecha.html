@@ -1,0 +1,30 @@
+<ion-view>
+      <ion-content>
+		
+		<div ng-hide="esIE">
+			 <label class="item item-input">
+			  <span class="input-label">Fecha</span>
+			  <input type="datetime-local" ng-model="datosCita.fecha">
+			</label>
+		</div>
+
+	
+	<!-- Implementacion para windows y windows phone -->
+	<div ng-hide="!esIE" >
+		<div class="row">
+			<win-date-picker obtener-control="datePicker(ctrl)" on-change="dateChanged(date)"></win-date-picker>
+		</div>
+
+		<div class="row">
+			<win-time-picker obtener-control="timerPicker(ctrl)" ng-model="time" current="time" on-change="timeChanged(time)"></win-time-picker>
+		</div>
+	</div>
+	<!---->
+		
+		<div class="row">
+              <button class="button button-block button-balanced" ng-click="solicitarCita()" type="submit">Solicitar cita</button>
+       </div>
+
+      </ion-content>
+</ion-view>
+
