@@ -1,7 +1,7 @@
 <ion-view view-title="Sign In" ng-controller="signInController as vm">
 <ion-content has-subheader="false">
 
- <form name="form" ng-submit="doSign()">
+ <form name="form">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Email</span>
@@ -20,7 +20,7 @@
             <div class="col">
               <button ng-disabled="form.name.$dirty && form.name.$invalid ||
                   form.password.$dirty && form.password.$invalid || form.$invalid"
-                  class="button button-block button-positive" type="submit">Ingresar</button>
+                  class="button button-block button-positive" ng-click="doSign()" type="submit">Ingresar</button>
             </div>
             
             <div class="col">

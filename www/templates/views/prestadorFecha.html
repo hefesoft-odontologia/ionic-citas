@@ -1,25 +1,41 @@
 <ion-view>
       <ion-content>
-		
-		<div ng-hide="esIE">
-			 <label class="item item-input">
-			  <span class="input-label">Fecha</span>
-			  <input type="datetime-local" ng-model="datosCita.fecha">
-			</label>
+
+		 <label class="item item-input item-select">
+		    <div class="input-label">
+		      Mes
+		    </div>
+		     <select ng-options="mes.mes for mes in meses" ng-model="meses.seleccionado">
+      		 </select>
+		  </label>
 		</div>
 
-	
-	<!-- Implementacion para windows y windows phone -->
-	<div ng-hide="!esIE" >
-		<div class="row">
-			<win-date-picker obtener-control="datePicker(ctrl)" on-change="dateChanged(date)"></win-date-picker>
+		 <label class="item item-input item-select">
+		    <div class="input-label">
+		      Dia
+		    </div>
+			<select ng-options="dia.dia for dia in dias" ng-model="dias.seleccionado">
+      		</select>
+		  </label>
 		</div>
 
-		<div class="row">
-			<win-time-picker obtener-control="timerPicker(ctrl)" ng-model="time" current="time" on-change="timeChanged(time)"></win-time-picker>
+		 <label class="item item-input item-select">
+		    <div class="input-label">
+		      Horas
+		    </div>
+			<select ng-options="hora.hora for hora in horas" ng-model="horas.seleccionado">
+      		</select>
+		  </label>
 		</div>
-	</div>
-	<!---->
+
+		<label class="item item-input item-select">
+		    <div class="input-label">
+		      Minuto
+		    </div>
+			 <select ng-options="periodo.periodo for periodo in periodos" ng-model="periodos.seleccionado">
+      		 </select>	
+		  </label>
+		</div>
 		
 		<div class="row">
               <button class="button button-block button-balanced" ng-click="solicitarCita()" type="submit">Solicitar cita</button>

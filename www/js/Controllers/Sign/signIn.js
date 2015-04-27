@@ -12,7 +12,7 @@ angular.module('starter')
 	}
 
 	$scope.registrarse = function(){
-		$state.go("app.signup");
+		$state.go("signup");
 	}
 
 	$scope.doSign = function(){
