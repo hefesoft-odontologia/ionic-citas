@@ -33,7 +33,9 @@ angular.module('starter')
         }
         
         dataTableStorageFactory.saveStorage(data).then(citaSolicitada, error);
-        UniversalApps.push(usuario.email, "Cita solicitada por: " + item.email);
+        UniversalApps.push(item.email, "Cita solicitada por: " + usuario.email, 0.1);
+        pushFactory.enviarMensajeUsername(item.email, "Cita solicitada por: " + usuario.email);        
+        UniversalApps.alert("Cita solicitada en espera de respuesta.", 8)
 
     }
 
@@ -68,7 +70,7 @@ angular.module('starter')
          //var textoCita = 'Nueva cita solicitada';
         //pushFactory.enviarMensajePlatform(item.email,textoCita, item.platform);
         //emailFactory.enviarEmail(usuario.email, item.email, 'Cita solicitada', textoCita, textoCita);
-        $state.go('app.citasolicitada');
+        $state.go('app.citasolicitada');        
     }
 
 
