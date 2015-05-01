@@ -61,7 +61,20 @@ angular.module('starter', ['ionic', 'ngCordova'])
         templateUrl: "templates/views/mensajes/citaSolicitada.html"        
       }
     }
+  })
+
+  .state('app.miscitas', {
+    url: "/miscitas",
+    cache: false,
+    views: {
+      'menuContent': {
+        templateUrl: "templates/views/misCitas.html",
+        controller: 'misCitasCtrl'
+      }
+    }
   })  
+
+  
 
 .state('sigin', {
   url: '/sigin',
@@ -75,6 +88,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
 .state('app.prestadorFecha', {
     url: "/prestadorFecha/:prestadorId",
+    cache: false,
     views: {
         'menuContent': {
             templateUrl: "templates/views/prestadorFecha.html",
