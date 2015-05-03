@@ -88,6 +88,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
 .state('captcha', {
   url: '/captcha',
+  cache : false,
   templateUrl: 'lib/hefesoft.azure/Directivas/recaptcha/Vista/captcha.html'  
 })
 

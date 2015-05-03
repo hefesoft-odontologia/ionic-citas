@@ -17,8 +17,7 @@ controller('recaptchaController', ['$scope', '$state', '$timeout', 'varsFactoryS
       var currentPlatformVersion = ionic.Platform.version();
 
       if(isAndroid || isWindowsPhone ||  isIOS){
-      	  varsFactoryService.captchaSet('mobile');
-          $scope.activarIngreso = true;
+      	  varsFactoryService.captchaSet('mobile');          
           $state.go("sigin");
       }
 
