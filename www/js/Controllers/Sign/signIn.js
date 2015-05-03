@@ -1,8 +1,10 @@
 angular.module('starter')
-.controller('signInController', ['$scope','signFactoryService','$ionicLoading','$state', 'users', 'pushFactory', 'UniversalApps',
-	function ($scope, signFactoryService, $ionicLoading, $state, users, pushFactory, UniversalApps) {
+.controller('signInController', ['$scope','signFactoryService','$ionicLoading','$state', 'users', 'pushFactory', 'UniversalApps', 'validarNavegacionService',
+	function ($scope, signFactoryService, $ionicLoading, $state, users, pushFactory, UniversalApps, validarNavegacionService) {
 	var isIE = /*@cc_on!@*/false || !!document.documentMode;
 	$scope.loginData= {};
+
+	validarNavegacionService.validarCaptcha();
 	var usuario = users.getCurrentUser();
 
 	if(!angular.isUndefined(usuario) && usuario.email.length >0){

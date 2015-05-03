@@ -3,7 +3,9 @@
 <!-- POSTs back to the page's URL upon submit with a g-recaptcha-response POST parameter. -->
     <form  ng-submit="irLogin()">
       <div id="captcha" recaptcha="setCaptcha(response)"></div>
-      <br> 
-      <input ng-show="activarIngreso" type="submit" value="Ingresar">
+      <br>       
+      <button ng-show="activarIngreso" class="button button-balanced" ng-click="Ingresar()" type="submit">			Ingresar
+      </button>
+
     </form>
 </div>

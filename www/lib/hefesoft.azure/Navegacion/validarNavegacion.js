@@ -29,6 +29,14 @@ service('validarNavegacionService', ['users', '$state', 'varsFactoryService', fu
         }       
 
         return valido;
+    }
+
+    this.validarCaptcha = function (){         
+        var valido = varsFactoryService.captchaFijado();
+
+        if(!valido){
+            $state.go("captcha");
+        }
 
     }
 

@@ -1,8 +1,9 @@
 angular.module('starter')
-.controller('signUpController', ['$scope', 'signFactoryService','$ionicLoading', '$state',
-	function ($scope, signFactoryService, $ionicLoading, $state) {
+.controller('signUpController', ['$scope', 'signFactoryService','$ionicLoading', '$state', 'validarNavegacionService',
+	function ($scope, signFactoryService, $ionicLoading, $state, validarNavegacionService) {
 	
 	$scope.loginData= {};
+	validarNavegacionService.validarCaptcha();
 
 	$scope.doSignUp = function(){
 		$ionicLoading.show();
