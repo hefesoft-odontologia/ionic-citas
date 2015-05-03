@@ -86,6 +86,11 @@ angular.module('starter', ['ionic', 'ngCordova'])
   templateUrl: 'templates/views/Sign/SignUp.html'  
 })
 
+.state('captcha', {
+  url: '/captcha',
+  templateUrl: 'lib/hefesoft.azure/Directivas/recaptcha/Vista/captcha.html'  
+})
+
 .state('app.prestadorFecha', {
     url: "/prestadorFecha/:prestadorId",
     cache: false,
@@ -97,5 +102,5 @@ angular.module('starter', ['ionic', 'ngCordova'])
         }
     });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/sigin');
+  $urlRouterProvider.otherwise('/captcha');
 });
