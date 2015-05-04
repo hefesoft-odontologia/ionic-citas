@@ -3,6 +3,8 @@ angular.module('starter')
 	
 	var vars = {};
 	var prestadorSeleccionado;
+	var captcha;
+	var captchaFijado = false;
 
 	vars.fijarPrestador = function(prestador){
 		prestadorSeleccionado = prestador;
@@ -10,6 +12,15 @@ angular.module('starter')
 
 	vars.prestadorSeleccionado = function(){
 		return prestadorSeleccionado;
+	}
+
+	vars.captchaSet = function(response){
+		captcha = response;
+		captchaFijado = true;
+	}
+
+	vars.captchaFijado = function(){
+		return captchaFijado;
 	}
 
 	return vars;

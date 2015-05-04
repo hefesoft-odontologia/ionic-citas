@@ -29,6 +29,17 @@ service('validarNavegacionService', ['users', '$state', 'varsFactoryService', fu
         }       
 
         return valido;
+<<<<<<< HEAD
+=======
+    }
+
+    this.validarCaptcha = function (){         
+        var valido = varsFactoryService.captchaFijado();
+
+        if(!valido){
+            $state.go("captcha");
+        }
+>>>>>>> origin/master
 
     }
 
