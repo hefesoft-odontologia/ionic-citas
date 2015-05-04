@@ -29,8 +29,7 @@ service('validarNavegacionService', ['users', '$state', 'varsFactoryService', fu
         }       
 
         return valido;
-<<<<<<< HEAD
-=======
+
     }
 
     this.validarCaptcha = function (){         
@@ -39,7 +38,6 @@ service('validarNavegacionService', ['users', '$state', 'varsFactoryService', fu
         if(!valido){
             $state.go("captcha");
         }
->>>>>>> origin/master
 
     }
 
