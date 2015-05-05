@@ -1,0 +1,42 @@
+<ion-view view-title="Sign Up" ng-controller="signUpController as vm">
+<ion-content has-subheader="false">
+
+ <form name="form" ng-submit="doSignUp()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="email" ng-model="loginData.username" name="name" username required/>         
+        </label>
+
+        <button ng-show="form.name.$pending.username" class="button  button-full button-clear button-positive">
+            <span> validando el email de usuario...</span>  
+        </button>
+
+        <button ng-show="form.name.$error.username" class="button  button-full button-clear button-assertive">
+            <span> El email ya existe en el sistema!</span>
+        </button>
+
+        
+        
+
+        <label class="item item-input">
+          <span class="input-label">Clave</span>
+          <input type="password" name="password" ng-minlength="8" ng-model="loginData.password" required>
+        </label>
+        
+        <label class="item">
+          <button ng-disabled="form.name.$dirty && form.name.$invalid ||
+                  form.password.$dirty && form.password.$invalid || form.$invalid"
+          class="button button-block button-positive" type="submit">Suscribirse</button>
+        </label>
+
+      </div>
+</form>
+
+<button class="button  button-full button-clear button-positive" ng-click="goLogin()">
+  volver al login
+</button>
+
+
+</ion-content>
+</ion-view>

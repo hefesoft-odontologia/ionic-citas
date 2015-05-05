@@ -6,6 +6,7 @@ app.service('signalrService', ['$rootScope','$q', 'urlServicioFactory', 'tokenSe
 	var self = this;
     var deferred = q.defer();
     var accessToken;
+    var tryingToReconnect = false;
     
     
     // example of WebAPI call using bearer token
@@ -37,15 +38,46 @@ app.service('signalrService', ['$rootScope','$q', 'urlServicioFactory', 'tokenSe
 
 
             var usuario = users.getCurrentUser();
-            connection.qs = { bearer_token: token, usuario: usuario.email};               
-
+            connection.qs = { bearer_token: token, usuario: usuario.email}; 
+           
             //Se hace con longpoling xq websocket en azure (las cuentas gratis solo soportan 5 conexiones simultaneas)
             connection.start({ transport: 'longPolling', jsonp : true}).done(function(){ 
-                    console.log("Proxy inicializado");
-                    deferred.resolve('Proxy inicializado'); 
-                    varsFactoryService.setproxyEnLinea(true);
+                        console.log("Proxy inicializado");
+                        deferred.resolve('Proxy inicializado'); 
+                        varsFactoryService.setproxyEnLinea(true);
+                    }
+                );
+
+            connection.reconnecting(function() {
+                tryingToReconnect = true;
+                console.log("Reconectando");
+            });
+
+            connection.reconnected(function() {
+                tryingToReconnect = false;
+                console.log("Reconectado");
+            });
+
+            connection.disconnected(function() {
+                if(tryingToReconnect) {
+                    setTimeout(function() {
+                        
+                        /****************************************/
+                        //Se hace con longpoling xq websocket en azure (las cuentas gratis solo soportan 5 conexiones simultaneas)
+                        connection.start({ transport: 'longPolling', jsonp : true}).done(function(){ 
+                                    console.log("Proxy inicializado");
+                                    deferred.resolve('Proxy inicializado'); 
+                                    varsFactoryService.setproxyEnLinea(true);
+                            }
+                        );
+                        /******************************************/
+
+
+                    }, 5000); // Restart connection after 5 seconds.
                 }
-            );
+            });
+
+         
 
             return deferred.promise;
     };
@@ -67,5 +99,7 @@ app.service('signalrService', ['$rootScope','$q', 'urlServicioFactory', 'tokenSe
         var stringData = JSON.stringify(datos);     
     	proxy.invoke('Send', user, stringData);
     };
+
+    
 
 }])
