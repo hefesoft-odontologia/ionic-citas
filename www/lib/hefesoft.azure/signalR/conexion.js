@@ -1,5 +1,5 @@
 angular.module('starter')
-.service('procesarMensajeRecibido', ['$rootScope', 'messageService', '$timeout', '$q', '$interval', 'varsFactoryService', 'signalrService',
+.service('conexionSignalR', ['$rootScope', 'messageService', '$timeout', '$q', '$interval', 'varsFactoryService', 'signalrService',
 	function (messageService, $rootScope, $timeout, $q, $interval, varsFactoryService, signalrService) {
 
 	var datafactory = {};
@@ -29,36 +29,16 @@ angular.module('starter')
 	}
 
 
-	datafactory.tipoMensaje = function(nombre, mensaje){
-		var array = mensaje.split(",")
-		var tipo = array[0];
-		var mensaje = array[1];
-		var accion = array[2];
-		
-
-		if(tipo == "mensaje"){
-			datafactory.mostrarMensaje(nombre + " ha enviado " + mensaje);
-		}
-		else if(tipo == "ejecutar accion"){
-			datafactory.ejecutar(accion,mensaje, nombre);
-		}
-	}
-
-	datafactory.mostrarMensaje = function(mensaje){
-		messageService.showMessage(mensaje);
-	}
-
-	datafactory.ejecutar = function(accion, mensaje, de){
-		$rootScope.$broadcast(accion, { mensaje: mensaje, de : de } );   
-	}
+	
 
 	function validarEstadoProxy(){
 		var deferred = $q.defer();
 		var enLinea = false;
 		var proxyInicializado = varsFactoryService.obtenerproxyInicializado();
+		var enLinea = varsFactoryService.obtenerproxyEnLinea();
 		
 		//Si el proxy no esta inicializado inicializelo
-		if(!proxyInicializado){
+		if(!proxyInicializado || !enLinea){
 			signalrService.inicializarProxy('chatHub');
 
 			var interval = $interval(function(){

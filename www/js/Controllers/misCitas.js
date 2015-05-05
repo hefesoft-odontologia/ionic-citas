@@ -1,6 +1,6 @@
 angular.module('starter')
-.controller('misCitasCtrl', ['$scope', 'dataTableStorageFactory', '$q', 'validarNavegacionService', 'users', '$ionicLoading', 'pushFactory',
-	function ($scope, dataTableStorageFactory, $q, validarNavegacionService, users, $ionicLoading, pushFactory) {
+.controller('misCitasCtrl', ['$scope', 'dataTableStorageFactory', '$q', 'validarNavegacionService', 'users', '$ionicLoading', 'pushFactory', 'conexionSignalR', 'messageService',
+	function ($scope, dataTableStorageFactory, $q, validarNavegacionService, users, $ionicLoading, pushFactory, conexionSignalR, messageService) {
 	
     $scope.shouldShowDelete = false;
     $scope.shouldShowReorder = false;
@@ -27,10 +27,27 @@ angular.module('starter')
     }
 
     $scope.cancelar = function(item){
-        item.aceptadaUsuario = 2;
+        var usuario = users.getCurrentUser();
+        item.aceptadaUsuario = "3";
         dataTableStorageFactory.saveStorage(item).then(success, error);        
         pushFactory.enviarMensajeUsername(item.prestadorEmail, "Ha cancelado la cita del dia: " +  item.fecha); 
+        
+        //para, de, tipo, mensaje, accion
+        conexionSignalR.procesarMensaje(item.prestadorEmail, usuario.email, "ejecutar accion", item.RowKey, "cita cancelada");
     }
+
+    $scope.$on('cita cancelada', function(event, args) {
+       try{
+           var RowKey = args.mensaje;
+           var cita = _.find($scope.listado, { 'RowKey': RowKey })
+           cita.aceptadaUsuario = "3";        
+           messageService.showMessage("Cita cancelada por " + cita.RowKey + " " + cita.fecha);        
+       }
+       catch(ex){
+            messageService.showMessage("Una cita a sido cancelada"); 
+       }
+       
+    })
 
     function success(data){
         console.log(data);

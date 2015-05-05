@@ -1,6 +1,6 @@
 var app = angular.module('starter');
-app.service('signalrService', ['$rootScope','$q', 'urlServicioFactory', 'tokenService', 'users', 'varsFactoryService',
-    function ($rootScope, q,  urlServicioFactory, tokenService, users, varsFactoryService) {
+app.service('signalrService', ['$rootScope','$q', 'urlServicioFactory', 'tokenService', 'users', 'varsFactoryService', 'procesarMensajes',
+    function ($rootScope, q,  urlServicioFactory, tokenService, users, varsFactoryService, procesarMensajes) {
 	
 	var username;
 	var self = this;
@@ -32,7 +32,7 @@ app.service('signalrService', ['$rootScope','$q', 'urlServicioFactory', 'tokenSe
                 proxy = connection.createHubProxy("chatHub");
 
             proxy.on("broadcastMessage", function (name, message) {
-                //procesarMensajeRecibido.tipoMensaje(name, message);                             
+                procesarMensajes.tipoMensaje(name, message);                             
             });
 
 

@@ -1,6 +1,6 @@
 angular.module('starter')
-.controller('signInController', ['$scope','signFactoryService','$ionicLoading','$state', 'users', 'pushFactory', 'UniversalApps','signalrService', '$timeout', 'procesarMensajeRecibido',
-	function ($scope, signFactoryService, $ionicLoading, $state, users, pushFactory, UniversalApps, signalrService, $timeout, procesarMensajeRecibido) {
+.controller('signInController', ['$scope','signFactoryService','$ionicLoading','$state', 'users', 'pushFactory', 'UniversalApps','signalrService', '$timeout', 'conexionSignalR',
+	function ($scope, signFactoryService, $ionicLoading, $state, users, pushFactory, UniversalApps, signalrService, $timeout, conexionSignalR) {
 	var isIE = /*@cc_on!@*/false || !!document.documentMode;
 	$scope.loginData= {};
 	var usuario = users.getCurrentUser();
@@ -26,8 +26,10 @@ angular.module('starter')
 		$ionicLoading.hide();
 		$state.go("app.citas");
 		pushFactory.registerAndroid();
-
-		procesarMensajeRecibido.procesarMensaje('futbolito152@gmail.com','futbolito152@gmail.com', 'mensaje', 'hola');
+		
+		//para, de, tipo, mensaje, accion
+		//Esta instruccion es para inicializar el proxy
+        conexionSignalR.procesarMensaje($scope.loginData.username, $scope.loginData.username, '', "");
 	}	
 
 	function error(data){
