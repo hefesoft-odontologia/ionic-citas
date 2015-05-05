@@ -1,6 +1,6 @@
 angular.module('starter')
-.controller('signInController', ['$scope','signFactoryService','$ionicLoading','$state', 'users', 'pushFactory', 'UniversalApps',
-	function ($scope, signFactoryService, $ionicLoading, $state, users, pushFactory, UniversalApps) {
+.controller('signInController', ['$scope','signFactoryService','$ionicLoading','$state', 'users', 'pushFactory', 'UniversalApps','signalrService', '$timeout',
+	function ($scope, signFactoryService, $ionicLoading, $state, users, pushFactory, UniversalApps, signalrService, $timeout) {
 	var isIE = /*@cc_on!@*/false || !!document.documentMode;
 	$scope.loginData= {};
 	var usuario = users.getCurrentUser();
@@ -17,7 +17,7 @@ angular.module('starter')
 
 	$scope.doSign = function(){
 		$ionicLoading.show();
-		signFactoryService.sign($scope.loginData).then(success, error);
+		signFactoryService.sign($scope.loginData).then(success, error);		
 	}
 
 	function success(data){
@@ -25,7 +25,17 @@ angular.module('starter')
 		console.log(data);
 		$ionicLoading.hide();
 		$state.go("app.citas");
-		pushFactory.registerAndroid();		
+		pushFactory.registerAndroid();
+
+		//SignalR
+		signalrService.inicializarProxy('chatHub')
+		.then(proxyInicializado,error,error);
+	}
+
+	function proxyInicializado(){
+		$timeout(function(){
+			signalrService.sendMessage('futbolito152@gmail.com', {mensaje : 'prueba socket', to: 'futbolito152@gmail.com'});	
+		}, 10000);		
 	}
 
 	function error(data){
