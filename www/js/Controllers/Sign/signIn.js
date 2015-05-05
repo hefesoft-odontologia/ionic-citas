@@ -1,6 +1,6 @@
 angular.module('starter')
-.controller('signInController', ['$scope','signFactoryService','$ionicLoading','$state', 'users', 'pushFactory', 'UniversalApps','signalrService', '$timeout',
-	function ($scope, signFactoryService, $ionicLoading, $state, users, pushFactory, UniversalApps, signalrService, $timeout) {
+.controller('signInController', ['$scope','signFactoryService','$ionicLoading','$state', 'users', 'pushFactory', 'UniversalApps','signalrService', '$timeout', 'procesarMensajeRecibido',
+	function ($scope, signFactoryService, $ionicLoading, $state, users, pushFactory, UniversalApps, signalrService, $timeout, procesarMensajeRecibido) {
 	var isIE = /*@cc_on!@*/false || !!document.documentMode;
 	$scope.loginData= {};
 	var usuario = users.getCurrentUser();
@@ -27,16 +27,8 @@ angular.module('starter')
 		$state.go("app.citas");
 		pushFactory.registerAndroid();
 
-		//SignalR
-		signalrService.inicializarProxy('chatHub')
-		.then(proxyInicializado,error,error);
-	}
-
-	function proxyInicializado(){
-		$timeout(function(){
-			signalrService.sendMessage('futbolito152@gmail.com', {mensaje : 'prueba socket', to: 'futbolito152@gmail.com'});	
-		}, 10000);		
-	}
+		procesarMensajeRecibido.procesarMensaje('futbolito152@gmail.com','futbolito152@gmail.com', 'mensaje', 'hola');
+	}	
 
 	function error(data){
 		console.log(data);

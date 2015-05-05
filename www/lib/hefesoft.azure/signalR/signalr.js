@@ -1,17 +1,21 @@
 var app = angular.module('starter');
-app.service('signalrService', ['$rootScope','$q', 'urlServicioFactory', 'tokenService', 'users', 'messageService',
-    function ($rootScope, q,  urlServicioFactory, tokenService, users, messageService) {
+app.service('signalrService', ['$rootScope','$q', 'urlServicioFactory', 'tokenService', 'users', 'varsFactoryService',
+    function ($rootScope, q,  urlServicioFactory, tokenService, users, varsFactoryService) {
 	
 	var username;
 	var self = this;
     var deferred = q.defer();
     var accessToken;
     
+    
     // example of WebAPI call using bearer token
     var bearerToken = tokenService.getTokenDocument();
     var proxy;
 
-    this.inicializarProxy = function(nombreMetodoOir){  
+   
+
+    this.inicializarProxy = function(nombreMetodoOir){
+                varsFactoryService.setproxyInicializado(true);
                 var token = tokenService.getTokenDocument();
 
                 $.connection.hub.logging = true;               
@@ -21,14 +25,14 @@ app.service('signalrService', ['$rootScope','$q', 'urlServicioFactory', 'tokenSe
                 connection.error(function (error) {
                         console.log('SignalR error: ' + error);
                         deferred.reject(error);
+                        varsFactoryService.setproxyInicializado(false);
                 });
 
                 //Nombre del hub a conectar
                 proxy = connection.createHubProxy("chatHub");
 
             proxy.on("broadcastMessage", function (name, message) {
-                messageService.showMessage(name + " " + message);
-                $rootScope.$broadcast('signalrOn', name, message);                
+                //procesarMensajeRecibido.tipoMensaje(name, message);                             
             });
 
 
@@ -38,7 +42,8 @@ app.service('signalrService', ['$rootScope','$q', 'urlServicioFactory', 'tokenSe
             //Se hace con longpoling xq websocket en azure (las cuentas gratis solo soportan 5 conexiones simultaneas)
             connection.start({ transport: 'longPolling', jsonp : true}).done(function(){ 
                     console.log("Proxy inicializado");
-                    deferred.resolve('Proxy inicializado');     
+                    deferred.resolve('Proxy inicializado'); 
+                    varsFactoryService.setproxyEnLinea(true);
                 }
             );
 
