@@ -7,6 +7,7 @@ angular.module('starter')
 	var captchaFijado = false;
 	var proxyInicializado = false;
     var proxyEnLinea = false;
+    var modoDesarrollo = false;
 
 	vars.fijarPrestador = function(prestador){
 		prestadorSeleccionado = prestador;
@@ -42,6 +43,10 @@ angular.module('starter')
 
 	vars.captchaFijado = function(){
 		return captchaFijado;
+	}
+
+	vars.getModoDesarrollo = function(){
+		return modoDesarrollo;
 	}
 
 	return vars;
