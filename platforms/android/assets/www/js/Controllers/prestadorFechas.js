@@ -50,7 +50,7 @@ angular.module('starter')
         
         var mensaje = "Deseo una cita para  " + fecha;
         dataTableStorageFactory.saveStorage(data).then(citaSolicitada, error);        
-        pushFactory.enviarMensajeUsername(item.email, "Cita solicitada para: " + fecha);
+        //pushFactory.enviarMensajeUsername(item.email, "Cita solicitada para: " + fecha);
         
         //para, de, tipo, mensaje, accion
         conexionSignalR.procesarMensaje(item.email, usuario.email, 'mensaje', mensaje);

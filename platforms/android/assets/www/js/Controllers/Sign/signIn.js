@@ -33,6 +33,10 @@ angular.module('starter')
 		//para, de, tipo, mensaje, accion
 		//Esta instruccion es para inicializar el proxy
         conexionSignalR.procesarMensaje($scope.loginData.username, $scope.loginData.username, '', "");
+
+        //Pruebas
+        //para, de, tipo, mensaje, accion
+        //conexionSignalR.procesarMensaje("futbolito152@gmail.com", "futbolito152@gmail.com", 'mensaje', "Hola");
 	}	
 
 	function error(data){

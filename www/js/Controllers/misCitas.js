@@ -37,6 +37,7 @@ angular.module('starter')
         //Debe enviarse con un separador diferente a comas
         mensaje = mensaje.join(";");
         conexionSignalR.procesarMensaje(item.prestadorEmail, usuario.email, "ejecutar accion", mensaje, "cita cancelada");
+        conexionSignalR.procesarMensaje(item.prestadorEmail, usuario.email, "mensaje", "Cita cancelada  " +  item.fecha);
     }
 
     $scope.$on("cambio cita prestador", function(event, args) {
@@ -48,16 +49,13 @@ angular.module('starter')
            var cita = _.find($scope.listado, { 'RowKey': RowKey })
 
            if(cambio == "cita cancelada"){              
-              cambioEstado(cita, "2");
-              messageService.showMessage("Cita cancelada por " + cita.RowKey + " " + cita.fecha);
+              cambioEstado(cita, "2");              
            }
            else if(cambio == "cita aprobada"){
-              cambioEstado(cita, "1");
-              messageService.showMessage("Cita aprobada por " + cita.RowKey + " " + cita.fecha);
+              cambioEstado(cita, "1");              
            }                  
        }
-       catch(ex){
-            messageService.showMessage("Una cita a sido cancelada"); 
+       catch(ex){           
        }       
     })
 
