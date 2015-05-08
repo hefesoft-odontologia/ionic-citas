@@ -1,6 +1,7 @@
 angular.module('starter')
 .controller('signInController', ['$scope','signFactoryService','$ionicLoading','$state', 'users', 'pushFactory', 'UniversalApps','signalrService', '$timeout', 'conexionSignalR', 'platformService', 'inicializarServicios',
 	function ($scope, signFactoryService, $ionicLoading, $state, users, pushFactory, UniversalApps, signalrService, $timeout, conexionSignalR, platformService, inicializarServicios) {
+
 	var isIE = /*@cc_on!@*/false || !!document.documentMode;
 	$scope.loginData= {};
 	var usuario = users.getCurrentUser();
