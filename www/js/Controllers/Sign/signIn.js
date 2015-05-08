@@ -1,6 +1,6 @@
 angular.module('starter')
-.controller('signInController', ['$scope','signFactoryService','$ionicLoading','$state', 'users', 'pushFactory', 'UniversalApps','signalrService', '$timeout', 'conexionSignalR', 'platformService',
-	function ($scope, signFactoryService, $ionicLoading, $state, users, pushFactory, UniversalApps, signalrService, $timeout, conexionSignalR, platformService) {
+.controller('signInController', ['$scope','signFactoryService','$ionicLoading','$state', 'users', 'pushFactory', 'UniversalApps','signalrService', '$timeout', 'conexionSignalR', 'platformService', 'inicializarServicios',
+	function ($scope, signFactoryService, $ionicLoading, $state, users, pushFactory, UniversalApps, signalrService, $timeout, conexionSignalR, platformService, inicializarServicios) {
 	var isIE = /*@cc_on!@*/false || !!document.documentMode;
 	$scope.loginData= {};
 	var usuario = users.getCurrentUser();
@@ -24,19 +24,8 @@ angular.module('starter')
 		UniversalApps.login($scope.loginData.username, $scope.loginData.password);
 		console.log(data);
 		$ionicLoading.hide();
+		inicializarServicios.inicializar($scope.loginData.username);
 		$state.go("app.citas");
-
-		if(platformService.esMobile()){
-			pushFactory.registerAndroid();
-		}
-		
-		//para, de, tipo, mensaje, accion
-		//Esta instruccion es para inicializar el proxy
-        conexionSignalR.procesarMensaje($scope.loginData.username, $scope.loginData.username, '', "");
-
-        //Pruebas
-        //para, de, tipo, mensaje, accion
-        //conexionSignalR.procesarMensaje("futbolito152@gmail.com", "futbolito152@gmail.com", 'mensaje', "Hola");
 	}	
 
 	function error(data){
