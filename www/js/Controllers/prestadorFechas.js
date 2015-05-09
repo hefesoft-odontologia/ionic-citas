@@ -54,6 +54,15 @@ angular.module('starter')
         
         //para, de, tipo, mensaje, accion
         conexionSignalR.procesarMensaje(item.email, usuario.email, 'mensaje', mensaje);
+
+        var mensajeAccion = [item.RowKey, "cita adicionada"];
+        //Debe enviarse con un separador diferente a comas
+        mensajeAccion = mensajeAccion.join(";");
+        
+        //Para que en el listado de citas del otro app recargue
+        conexionSignalR.procesarMensaje(item.email, usuario.email, "ejecutar accion", mensajeAccion, "nueva cita");
+
+
         UniversalApps.alert("Cita solicitada en espera de respuesta.", 8)
 
     }
