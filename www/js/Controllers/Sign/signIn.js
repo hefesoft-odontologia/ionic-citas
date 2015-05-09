@@ -22,16 +22,29 @@ angular.module('starter')
 	}
 
 	function success(data){
-		UniversalApps.login($scope.loginData.username, $scope.loginData.password);
-		console.log(data);
-		$ionicLoading.hide();
-		inicializarServicios.inicializar($scope.loginData.username);
-		$state.go("app.citas");
+		try{
+			UniversalApps.login($scope.loginData.username, $scope.loginData.password);
+			console.log(data);			
+			inicializarServicios.inicializar($scope.loginData.username);
+			$ionicLoading.hide();
+			$state.go("app.citas");
+		}
+		catch(ex){
+			$ionicLoading.hide();
+			$state.go("app.citas");
+
+			//Molesta el push en wp8
+			//alert(ex);
+		}
 	}	
 
 	function error(data){
 		console.log(data);
 		$ionicLoading.hide();
+
+		if(isIE){
+			alert(data);
+		}
 	}
 
 }])
